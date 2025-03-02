@@ -58,6 +58,7 @@ public class Calculator {
             button.setFont(new Font("Arial", Font.PLAIN, 30));
             button.setText(buttonValue);
             button.setFocusable(false); // get rid of lines around symbols
+
             buttonsPanel.add(button);
         }
     }
