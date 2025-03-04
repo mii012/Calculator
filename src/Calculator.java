@@ -3,6 +3,7 @@ import java.awt.event.*;
 import java.util.Arrays;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
+import java.math.*;
 
 //Code by Kenny Yip Coding
 public class Calculator {
@@ -28,6 +29,11 @@ public class Calculator {
     JLabel displayLabel = new JLabel();
     JPanel displayPanel = new JPanel();
     JPanel buttonsPanel = new JPanel();
+
+    // A+B, A-B, A*B, A/B
+    String A = "0";
+    String operator = null;
+    String B = null;
 
     // constructor
     Calculator() {
@@ -84,18 +90,58 @@ public class Calculator {
                     if (Arrays.asList(rightSymbols).contains(buttonValue)) {
 
                     } else if (Arrays.asList(topSymbols).contains(buttonValue)) {
+                        if (buttonValue == "AC") {
+                            clearAll();
+                            displayLabel.setText("0");
+                        } else if (buttonValue == "+/-") {
+                            double numDisplay = Double.parseDouble(displayLabel.getText());
+                            numDisplay *= -1;
+                            displayLabel.setText(removeZeroDecimal(numDisplay));
+
+                        } else if (buttonValue == "%") {
+                            double numDisplay = Double.parseDouble(displayLabel.getText());
+                            numDisplay /= 100;
+                            displayLabel.setText(removeZeroDecimal(numDisplay));
+                        }
 
                     } else { // digits or decimal
                         if (buttonValue == ".") {
-
-                        } else if ("123456789".contains(buttonValue)) {
-                            if (displayLabel.getText() == "0") {
-
+                            // if displaylabel does not have decimal place (buttonValue = .)
+                            if (!displayLabel.getText().contains(buttonValue)) {
+                                displayLabel.setText(displayLabel.getText() + buttonValue);
                             }
+                        } else if ("0123456789".contains(buttonValue)) {
+                            // to prevent 0005, marks beginning, only replaces 0
+                            if (displayLabel.getText() == "0") {
+                                displayLabel.setText(buttonValue);
+                            } else {
+                                // no relacement anymore,adds numbers
+                                displayLabel.setText(displayLabel.getText() + buttonValue);
+                            }
+                        } else { // square root by Mia Haworth
+                            double currentValue = Double.parseDouble(displayLabel.getText());
+                            currentValue = Math.sqrt(currentValue);
+                            displayLabel.setText(Double.toString(currentValue));
                         }
                     }
                 }
             });
         }
     }
+
+    void clearAll() {
+        A = "0";
+        operator = null;
+        B = null;
+    }
+
+    String removeZeroDecimal(double numDisplay) {
+        if (numDisplay % 1 == 0) {
+            // double to int and int to string
+            return Integer.toString((int) numDisplay);
+        }
+        return Double.toString(numDisplay);
+    }
 }
+
+// noch effizienter machen mit switch?
