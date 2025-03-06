@@ -37,7 +37,6 @@ public class Calculator {
 
     // constructor
     Calculator() {
-        frame.setVisible(true);
         frame.setSize(boardWidth, boardHeight);
         frame.setLocationRelativeTo(null); // center frame
         frame.setResizable(false); // user cannot resize window
@@ -88,9 +87,44 @@ public class Calculator {
                     String buttonValue = button.getText();
 
                     if (Arrays.asList(rightSymbols).contains(buttonValue)) {
+                        if (buttonValue == "=") {
+                            if (A != null) {
+                                B = displayLabel.getText();
+                                double numA = Double.parseDouble(A);
+                                double numB = Double.parseDouble(B);
+
+                                if (operator == "+") {
+                                    displayLabel.setText(removeZeroDecimal(numA + numB));
+
+                                } else if (operator == "-") {
+                                    displayLabel.setText(removeZeroDecimal(numA - numB));
+
+                                } else if (operator == "×") {
+                                    displayLabel.setText(removeZeroDecimal(numA * numB));
+
+                                } else if (operator == "÷") {
+                                    displayLabel.setText(removeZeroDecimal(numA / numB));
+                                }
+                                // resets A, b and operator to default values
+                                clearAll();
+                            }
+
+                        } else if ("+-×÷".contains(buttonValue)) {
+                            // ensures that operator is not clicked twice
+                            if (operator == null) { // only one operator clicked
+                                // number is saved
+                                A = displayLabel.getText();
+                                displayLabel.setText("0");
+                                B = "0";
+                            }
+                            // if another operator is clicked, it changes to newest operator
+                            // A is still saved value and not 0
+                            operator = buttonValue;
+                        }
 
                     } else if (Arrays.asList(topSymbols).contains(buttonValue)) {
                         if (buttonValue == "AC") {
+                            // resets A, b and operator to default values
                             clearAll();
                             displayLabel.setText("0");
                         } else if (buttonValue == "+/-") {
@@ -126,6 +160,9 @@ public class Calculator {
                     }
                 }
             });
+            // works best at the end when everything is put on the frame (like the label
+            // etc)
+            frame.setVisible(true);
         }
     }
 

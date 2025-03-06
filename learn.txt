@@ -1,0 +1,12 @@
+Calculator App
+
+if (Arrays.asList(topSymbols).contains(buttonValue)) { // if current symbol is part of topsymbols
+
+double numDisplay = Double.parseDouble(displayLabel.getText());
+
+displayLabel.setText(removeZeroDecimal(numDisplay));
+
+else if (buttonValue == "+/-") {
+
+} else if ("0123456789".contains(buttonValue)) {
+
