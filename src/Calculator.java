@@ -4,6 +4,7 @@ import java.util.Arrays;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.math.*;
+import java.util.Stack;
 
 //Code by Kenny Yip Coding
 public class Calculator {
@@ -16,14 +17,14 @@ public class Calculator {
     Color customPink = new Color(255, 186, 236);
 
     String[] buttonValues = {
-            "AC", "+/-", "%", "÷",
-            "7", "8", "9", "×",
-            "4", "5", "6", "-",
-            "1", "2", "3", "+",
-            "0", ".", "√", "="
+            "AC", "+/-", "%", "÷", "◄",
+            "7", "8", "9", "×", "",
+            "4", "5", "6", "-", "",
+            "1", "2", "3", "+", "",
+            "0", ".", "√", "=", "",
     };
     String[] rightSymbols = { "÷", "×", "-", "+", "=" };
-    String[] topSymbols = { "AC", "+/-", "%" };
+    String[] topSymbols = { "AC", "+/-", "%", "◄" };
 
     JFrame frame = new JFrame("Calculator");
     JLabel displayLabel = new JLabel();
@@ -34,6 +35,9 @@ public class Calculator {
     String A = "0";
     String operator = null;
     String B = null;
+
+    // array for buttonvalues
+    Stack<String> allButtonValues = new Stack<String>();
 
     // constructor
     Calculator() {
@@ -54,7 +58,7 @@ public class Calculator {
         displayPanel.add(displayLabel);
         frame.add(displayPanel, BorderLayout.NORTH); // entire displayPanel is placed north on the screen
 
-        buttonsPanel.setLayout(new GridLayout(5, 4));
+        buttonsPanel.setLayout(new GridLayout(5, 5));
         buttonsPanel.setBackground(customBlack);
         frame.add(buttonsPanel);
 
@@ -136,9 +140,27 @@ public class Calculator {
                             double numDisplay = Double.parseDouble(displayLabel.getText());
                             numDisplay /= 100;
                             displayLabel.setText(removeZeroDecimal(numDisplay));
+
+                            // undo button by Mia Haworth
+                        } else if (buttonValue == "◄") {
+                            if (displayLabel.getText() == "0") {
+                                displayLabel.setText("0");
+                            } else if (displayLabel.getText() != "0") {
+                                allButtonValues.pop();
+                                System.out.println("Delete numbers: " + allButtonValues);
+                                Object[] allValues = allButtonValues.toArray();
+                                String withBrackets = Arrays.toString(allValues);
+                                String result = removeBrackets(withBrackets);
+                                System.out.println("w/o brackets: " + result);
+                                displayLabel.setText(result);
+
+                            }
                         }
 
                     } else { // digits or decimal
+                        allButtonValues.push(buttonValue);
+                        System.out.println("Put numbers in: " + allButtonValues);
+
                         if (buttonValue == ".") {
                             // if displaylabel does not have decimal place (buttonValue = .)
                             if (!displayLabel.getText().contains(buttonValue)) {
@@ -178,6 +200,14 @@ public class Calculator {
             return Integer.toString((int) numDisplay);
         }
         return Double.toString(numDisplay);
+    }
+
+    String removeBrackets(String withBrackets) {
+        String withoutBrackets = withBrackets.replace("[", "");
+        withoutBrackets = withoutBrackets.replace("]", "");
+        withoutBrackets = withoutBrackets.replace(",", "");
+        withoutBrackets = withoutBrackets.replace(" ", "");
+        return withoutBrackets;
     }
 }
 

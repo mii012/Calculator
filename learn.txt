@@ -10,3 +10,15 @@ else if (buttonValue == "+/-") {
 
 } else if ("0123456789".contains(buttonValue)) {
 
+
+Undo Button selbst machen
+
+buttonvalues zurücksetzen
+alle values in Array speichern, diese dann nach und nach löschen
+nein
+mit stack, immer letztes element löschen
++ Methode die klammern und kommas des Arrays entfernt 
+
+noch Probleme:
+- Randfälle (keine Zahl mehr in Stack)
+- A und B unterscheiden
