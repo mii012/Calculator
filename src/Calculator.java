@@ -89,31 +89,47 @@ public class Calculator {
                     JButton button = (JButton) e.getSource();
                     // get symbol of math operation
                     String buttonValue = button.getText();
+                    String resultCalc = "";
 
                     if (Arrays.asList(rightSymbols).contains(buttonValue)) {
                         if (buttonValue == "=") {
+                            allButtonValues.clear();
+                            System.out.println("Put numbers in: " + allButtonValues);
                             if (A != null) {
                                 B = displayLabel.getText();
                                 double numA = Double.parseDouble(A);
                                 double numB = Double.parseDouble(B);
 
                                 if (operator == "+") {
-                                    displayLabel.setText(removeZeroDecimal(numA + numB));
+                                    resultCalc = removeZeroDecimal(numA + numB);
+                                    allButtonValues.push(resultCalc);
+                                    displayLabel.setText(resultCalc);
+                                    System.out.println("Put numbers in: " + allButtonValues);
 
                                 } else if (operator == "-") {
-                                    displayLabel.setText(removeZeroDecimal(numA - numB));
+                                    resultCalc = removeZeroDecimal(numA - numB);
+                                    allButtonValues.push(resultCalc);
+                                    displayLabel.setText(resultCalc);
+                                    System.out.println("Put numbers in: " + allButtonValues);
 
                                 } else if (operator == "×") {
-                                    displayLabel.setText(removeZeroDecimal(numA * numB));
+                                    resultCalc = removeZeroDecimal(numA * numB);
+                                    allButtonValues.push(resultCalc);
+                                    displayLabel.setText(resultCalc);
+                                    System.out.println("Put numbers in: " + allButtonValues);
 
                                 } else if (operator == "÷") {
-                                    displayLabel.setText(removeZeroDecimal(numA / numB));
+                                    resultCalc = removeZeroDecimal(numA / numB);
+                                    allButtonValues.push(resultCalc);
+                                    displayLabel.setText(resultCalc);
+                                    System.out.println("Put numbers in: " + allButtonValues);
                                 }
                                 // resets A, b and operator to default values
                                 clearAll();
                             }
 
                         } else if ("+-×÷".contains(buttonValue)) {
+                            allButtonValues.clear();
                             // ensures that operator is not clicked twice
                             if (operator == null) { // only one operator clicked
                                 // number is saved
@@ -128,6 +144,7 @@ public class Calculator {
 
                     } else if (Arrays.asList(topSymbols).contains(buttonValue)) {
                         if (buttonValue == "AC") {
+                            allButtonValues.clear();
                             // resets A, b and operator to default values
                             clearAll();
                             displayLabel.setText("0");
@@ -150,17 +167,20 @@ public class Calculator {
                                 System.out.println("Delete numbers: " + allButtonValues);
                                 Object[] allValues = allButtonValues.toArray();
                                 String withBrackets = Arrays.toString(allValues);
+                                // bei leerem Array 0 anzeigen
+                                if (allButtonValues.size() == 0) {
+                                    withBrackets = "0";
+                                }
                                 String result = removeBrackets(withBrackets);
                                 System.out.println("w/o brackets: " + result);
                                 displayLabel.setText(result);
-
                             }
+                            // zahl speichern, ergbnis von rechnung und andere löschen
                         }
 
                     } else { // digits or decimal
                         allButtonValues.push(buttonValue);
                         System.out.println("Put numbers in: " + allButtonValues);
-
                         if (buttonValue == ".") {
                             // if displaylabel does not have decimal place (buttonValue = .)
                             if (!displayLabel.getText().contains(buttonValue)) {
