@@ -1,5 +1,7 @@
 ## Calculator Project
 
-Coded with Youtube video and additionally two functions added.
+A simple calculator application initially developed by following a YouTube tutorial.  
+To expand upon the base project, I implemented two additional functions to enhance its capabilities.  
 
-https://youtu.be/jQo6n-i6wpo?si=qQI1hslGdrZqafKv
+Tutorial reference: (https://youtu.be/jQo6n-i6wpo?si=qQI1hslGdrZqafKv)
+
